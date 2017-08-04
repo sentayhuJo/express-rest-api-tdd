@@ -1,0 +1,32 @@
+{
+  "name": "express-rest-api-tdd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sentayhuJo/express-rest-api-tdd.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sentayhuJo/express-rest-api-tdd/issues"
+  },
+  "homepage": "https://github.com/sentayhuJo/express-rest-api-tdd#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "method-override": "^2.3.9",
+    "mongoose": "^4.11.5"
+  },
+  "devDependencies": {
+    "morgan": "^1.8.2"
+  }
+}
