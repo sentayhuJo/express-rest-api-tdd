@@ -38,7 +38,7 @@ describe('/POST event', () => {
         let event = {
             date: "2/12/2017",
             time: "12:00 AM",
-            location: "london"
+            place: "london",
         }
             chai.request(server)
             .post('/event')
@@ -57,20 +57,47 @@ describe('/POST event', () => {
           date: "2/12/2017",
           time: "12:00 AM",
           location: "london",
-          title: ".NET"
+          title: ".NET",
         }
             chai.request(server)
             .post('/event')
             .send(event)
             .end((err, res) => {
+              console.log(res.body);
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 res.body.should.have.property('message').eql('Event successfully added!');
-                res.body.event.should.have.property('date');
-                res.body.event.should.have.property('time');
-                res.body.event.should.have.property('location');
-                res.body.event.should.have.property('title');
+                res.body.result.should.have.property('date');
+                res.body.result.should.have.property('time');
+                res.body.result.should.have.property('location');
+                res.body.result.should.have.property('title');
               done();
             });
       });
   });
+
+describe("/GET event by ID", () => {
+  it("it should get an event by the given Id", (done) => {
+    let Event =  new Event({
+      date: "3/12/2017",
+      time: "7:12 PM",
+      location: "Piza",
+      title: "Introduction to mongodb"
+    });
+    Event.save((err, result) => {
+      chai.request(server)
+      .get('/event/' + result.id)
+      .send(result)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a(Object);
+        res.body.should.have.property('date');
+        res.body.should.have.property('time');
+        res.body.should.have.property('location');
+        res.body.should.have.property('title');
+        res.body.should.have.property('_id').eql(result.id);
+      done();
+      });
+    });
+  });
+});
