@@ -22,9 +22,13 @@
   "homepage": "https://github.com/sentayhuJo/express-rest-api-tdd#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "chai": "^4.1.0",
     "express": "^4.15.3",
     "method-override": "^2.3.9",
-    "mongoose": "^4.11.5"
+    "mocha": "^3.5.0",
+    "mongoose": "^4.11.5",
+    "sinon": "^3.0.0",
+    "sinon-mongoose": "^2.0.2"
   },
   "devDependencies": {
     "morgan": "^1.8.2"
