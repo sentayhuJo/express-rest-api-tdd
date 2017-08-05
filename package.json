@@ -6,8 +6,20 @@
   "directories": {
     "test": "test"
   },
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "config": "^1.20.1",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.15",
+    "morgan": "^1.7.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "mocha": "^2.4.5"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --timeout 10000 || true",
     "start": "node server.js"
   },
   "repository": {
@@ -19,18 +31,5 @@
   "bugs": {
     "url": "https://github.com/sentayhuJo/express-rest-api-tdd/issues"
   },
-  "homepage": "https://github.com/sentayhuJo/express-rest-api-tdd#readme",
-  "dependencies": {
-    "body-parser": "^1.17.2",
-    "chai": "^4.1.0",
-    "express": "^4.15.3",
-    "method-override": "^2.3.9",
-    "mocha": "^3.5.0",
-    "mongoose": "^4.11.5",
-    "sinon": "^3.0.0",
-    "sinon-mongoose": "^2.0.2"
-  },
-  "devDependencies": {
-    "morgan": "^1.8.2"
-  }
+  "homepage": "https://github.com/sentayhuJo/express-rest-api-tdd#readme"
 }
