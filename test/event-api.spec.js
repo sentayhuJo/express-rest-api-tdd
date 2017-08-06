@@ -1,6 +1,6 @@
 
 let mongoose = require("mongoose");
-let Event = require('../controler/models/event-model');
+let Event = require('../models/event-model');
 
 let chai = require('chai');
 let chaiHttp = require('chai-http');

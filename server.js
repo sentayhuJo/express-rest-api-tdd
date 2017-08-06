@@ -5,7 +5,7 @@ let mongoose = require('mongoose');
 let morgan = require('morgan');
 let bodyParser = require('body-parser');
 let config = require('./config/config');
-let EventModel = require('./controler/models/event-model');
+let EventModel = require('./models/event-model');
 
 /**
   * DB connection
