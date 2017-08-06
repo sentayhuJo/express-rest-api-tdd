@@ -1,8 +1,10 @@
-let mongoose = require('mongoose');
-let Schema = mongoose.Schema;
 
-//Event schema definition
-let EventSchema = new Schema(
+const mongoose = require('mongoose');
+
+const Schema = mongoose.Schema;
+
+// Event schema definition
+const EventSchema = new Schema(
   {
     date: { type: Date, default: Date.now },
     time: { type: String },
@@ -10,9 +12,9 @@ let EventSchema = new Schema(
     title: { type: String, required: true },
   },
   {
-    versionKey: false
-  }
+    versionKey: false,
+  },
 );
 
-//Exports the EventSchema for use elsewhere.
+// Exports the EventSchema for use elsewhere.
 module.exports = mongoose.model('event', EventSchema);
