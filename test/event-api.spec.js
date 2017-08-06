@@ -50,7 +50,7 @@ describe('Event', () => {
             .send(event)
             .end((err, res) => {
                 res.should.have.status(200);
-                res.body.should.be.a('object');
+                res.body.should.be.a(Object);
                 res.body.should.have.property('errors');
                 res.body.errors.should.have.property('title');
                 res.body.errors.title.should.have.property('kind').eql('required');
@@ -59,7 +59,7 @@ describe('Event', () => {
       });
       it('it should POST an Event ', (done) => {
         let event = {
-          date: "2/12/2017",
+          date: new Date(),
           time: "12:00 AM",
           location: "london",
           title: ".NET",
@@ -69,7 +69,7 @@ describe('Event', () => {
             .send(event)
             .end((err, res) => {
                 res.should.have.status(200);
-                res.body.should.be.a('object');
+                res.body.should.be.a(Object);
                 res.body.should.have.property('message').eql('Event successfully added!');
                 res.body.result.should.have.property('date');
                 res.body.result.should.have.property('time');
@@ -103,7 +103,7 @@ describe("/GET event by ID", () => {
         res.body.should.have.property('time');
         res.body.should.have.property('location');
         res.body.should.have.property('title');
-        res.body.should.have.property('_id').eql(result.id);
+        res.body.should.have.property('_id').eql(event.id);
       done();
       });
     });
@@ -123,21 +123,22 @@ describe("/GET event by ID", () => {
           title: "Python3"
         });
         newEvent.save((err, event) => {
-                chai.request(server)
-                .put('/event/' + event.id)
-                .send({
-                  date: "9/12/2017",
-                  time: "15:00 PM",
-                  location: 'Manchester',
-                  title: "ES6"
-                })
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    res.body.should.have.property('message').eql('Event updated!');
-                    res.body.book.should.have.property('title').eql(ES6);
-                  done();
-                });
+          chai.request(server)
+          .put('/event/' + event.id)
+          .send({
+            date: "9/12/2017",
+            time: "15:00 PM",
+            location: 'Manchester',
+            title: "ES6"
+          })
+          .end((err, res) => {
+            console.log(res.body)
+              res.should.have.status(200);
+              res.body.result.should.be.a('object');
+              res.body.result.should.have.property('message').eql('Event updated!');
+              res.body.result.should.have.property('title').eql(ES6);
+            done();
+          });
           });
       });
   });
@@ -159,7 +160,7 @@ describe("/GET event by ID", () => {
                   .delete('/event/' + event.id)
                   .end((err, res) => {
                       res.should.have.status(200);
-                      res.body.should.be.a('object');
+                      res.body.should.be.a('Object');
                       res.body.should.have.property('message').eql('Event successfully deleted!');
                       res.body.result.should.have.property('ok').eql(1);
                       res.body.result.should.have.property('n').eql(1);
