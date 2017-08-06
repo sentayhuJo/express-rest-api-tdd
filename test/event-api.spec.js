@@ -2,23 +2,24 @@
 let mongoose = require("mongoose");
 let Event = require('../controler/models/event-model');
 
-//Require the dev-dependencies
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../server');
 let should = chai.should();
 
 chai.use(chaiHttp);
-
+/**
+  * Before every test , clean the database
+*/
 describe('Event', () => {
-    beforeEach((done) => { //Before each test we empty the database
+    beforeEach((done) => {
         Event.remove({}, (err) => {
            done();
         });
     });
 /*
-  * Test the /GET route
-  */
+  * GET, /event end point test
+*/
   describe('/get event', () => {
       it('it should GET all the events', (done) => {
         chai.request(server)
@@ -33,7 +34,11 @@ describe('Event', () => {
   });
 });
 
-describe('/POST event', () => {
+/*
+  * POST, /event end point test
+*/
+
+  describe('/POST event', () => {
       it('it should not POST an Event without title field', (done) => {
         let event = {
             date: "2/12/2017",
@@ -63,7 +68,6 @@ describe('/POST event', () => {
             .post('/event')
             .send(event)
             .end((err, res) => {
-              console.log(res.body);
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 res.body.should.have.property('message').eql('Event successfully added!');
@@ -76,18 +80,22 @@ describe('/POST event', () => {
       });
   });
 
+  /*
+    * /event/:id end point test
+  */
+
 describe("/GET event by ID", () => {
   it("it should get an event by the given Id", (done) => {
-    let Event =  new Event({
-      date: "3/12/2017",
+    let newEvent =  new Event({
+      date: "03/12/2017",
       time: "7:12 PM",
       location: "Piza",
       title: "Introduction to mongodb"
     });
-    Event.save((err, result) => {
+    newEvent.save((err, event) => {
       chai.request(server)
-      .get('/event/' + result.id)
-      .send(result)
+      .get('/event/' + event.id)
+      .send(event)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a(Object);
@@ -101,3 +109,62 @@ describe("/GET event by ID", () => {
     });
   });
 });
+
+/*
+  * PUT, /event/:id end point test
+*/
+
+  describe('/PUT/:id Event', () => {
+      it('it should UPDATE an Event given the id', (done) => {
+        let newEvent = new Event({
+          date: "9/12/2017",
+          time: "15:00 PM",
+          location: 'Manchester',
+          title: "Python3"
+        });
+        newEvent.save((err, event) => {
+                chai.request(server)
+                .put('/event/' + event.id)
+                .send({
+                  date: "9/12/2017",
+                  time: "15:00 PM",
+                  location: 'Manchester',
+                  title: "ES6"
+                })
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('message').eql('Event updated!');
+                    res.body.book.should.have.property('title').eql(ES6);
+                  done();
+                });
+          });
+      });
+  });
+
+  /*
+    * DELET, /event/:id end point test
+  */
+
+  describe('/DELETE/:id Event', () => {
+        it('it should DELETE an Event given the id', (done) => {
+          let newEvent = new Event({
+            date: "9/12/2017",
+            time: "15:00 PM",
+            location: 'Manchester',
+            title: "Python3"
+          })
+          newEvent.save((err, event) => {
+                  chai.request(server)
+                  .delete('/event/' + event.id)
+                  .end((err, res) => {
+                      res.should.have.status(200);
+                      res.body.should.be.a('object');
+                      res.body.should.have.property('message').eql('Event successfully deleted!');
+                      res.body.result.should.have.property('ok').eql(1);
+                      res.body.result.should.have.property('n').eql(1);
+                    done();
+                  });
+            });
+        });
+    });
